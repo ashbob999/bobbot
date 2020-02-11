@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Discord bot",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "index.js"
+  },
   "author": "ashbob999",
   "license": "ISC",
   "dependencies": {
