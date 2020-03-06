@@ -23,8 +23,8 @@ bot.on('ready', () => {
 
 bot.on('message', msg => {
     if (msg.content === 'ping') {
-        msg.reply('pong');
-        msg.channel.send('pong');
+        msg.reply('pong2');
+        msg.channel.send('pong2');
 
     }
 });
