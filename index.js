@@ -1,5 +1,4 @@
 require('dotenv').config();
-const wakeUpDyno = require("wakeDyno.js");
 
 const Discord = require("discord.js")
 
