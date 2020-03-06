@@ -4,7 +4,7 @@ const wakeUpDyno = require("wakeDyno.js");
 import { Client } from 'discord.js';
 
 const bot = new Client();
-const TOKEN = process.env.TESTBOT;
+const TOKEN = process.env.BOT_TOKEN;
 
 const PORT = 3000; // whatever port you like
 const DYNO_URL = ""; // the url of your dyno
