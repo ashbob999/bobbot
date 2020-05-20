@@ -1,15 +1,24 @@
-  {
-    "name": "bob-bot",
-    "version": "1.0.0",
-    "description": "Discord bot",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    },
-    "author": "ashbob999",
-    "license": "ISC",
-    "dependencies": {
-      "discord.js": "^11.5.1",
-      "dotenv": "^8.1.0"
-    }
-  }
+{
+  "name": "bob-bot",
+  "version": "1.0.0",
+  "description": "Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "ashbob999",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.6.4",
+    "dotenv": "^8.2.0",
+    "nodejs": "0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashbob999/bob-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ashbob999/bob-bot/issues"
+  },
+  "homepage": "https://github.com/ashbob999/bob-bot#readme"
+}

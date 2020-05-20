@@ -14,7 +14,7 @@ const config = {
 	prefix: "--",
 }
 
-const commands = require("./commands").Commands;
+const commands = require("./Commands.js").Commands;
 
 bot.login(TOKEN);
 

@@ -1,5 +1,5 @@
 
-const commands = require("./../commands.js").Commands;
+const commands = require("./../Commands.js").Commands;
 
 function showHelp(msg, args) {
 	// if help has arguments

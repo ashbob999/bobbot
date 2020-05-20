@@ -1,4 +1,14 @@
 
+function start(msg) {
+console.log("start")
+}
+
+function stop(msg) {
+console.log("stop");
+}
+
 module.exports = {
-	name: "times.js",
+	name: "Times.js",
+	start,
+	stop,
 }
