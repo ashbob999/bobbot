@@ -1,14 +1,6 @@
 require('dotenv').config();
 
 const util = require("./util");
-console.log(util.Times.name);
-// db
-
-const db = util.Database;
-console.log(db);
-console.log(db.getRows("select * from times;") == undefined);
-
-// db
 
 const Discord = require("discord.js")
 
@@ -22,21 +14,6 @@ const config = {
 	prefix: "--",
 }
 
-/*
-let timesChannels = {
-	"shit-talk": undefined,
-	"bot-channel": undefined,
-};
-
-const commands = {
-	start: { func: util.Times.start,
-			 whitelist: timesChannels,
-		},
-	stop: { func: util.Times.stop,
-			whitelist: timesChannels,
-		},
-}
-*/
 const commands = require("./commands").Commands;
 
 bot.login(TOKEN);
@@ -95,21 +72,8 @@ bot.on('message', msg => {
 	
 	// if help command sent
 	if (args[0] == "help") {
-		// if help has arguments
-		if (args.length > 1) {
-			// send command specific help
-			if (args[1] in commands) {
-				let reply = "Command '" + args[1] + "':\n";
-				reply += "\tDesc: " + commands[args[1]].desc + "\n";
-				reply += "\tUsage: "+ commands[args[1]].usage;
-				msg.channel.send(reply);
-			} else { // invalid command
-				msg.channel.send("'" + args[1] + "' is not a command");
-			}
-			return;
-		} else { // show help for all commands
-			msg.channel.send("help all commands");
-		}
+		util.Help.showHelp(msg, args);
+		return;
 	}
 
 	if (args[0] in commands) {
