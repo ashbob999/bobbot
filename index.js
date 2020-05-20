@@ -22,6 +22,7 @@ const config = {
 	prefix: "--",
 }
 
+/*
 let timesChannels = {
 	"shit-talk": undefined,
 	"bot-channel": undefined,
@@ -35,6 +36,8 @@ const commands = {
 			whitelist: timesChannels,
 		},
 }
+*/
+const commands = require("./commands").Commands;
 
 bot.login(TOKEN);
 
@@ -56,7 +59,6 @@ bot.on('ready', () => {
 			}
    	 }
     }
-    console.log(timesChannels);
 });
 
 bot.on('message', msg => {
