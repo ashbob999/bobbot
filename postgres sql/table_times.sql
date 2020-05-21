@@ -2,5 +2,5 @@ CREATE TABLE times(
   id SERIAL PRIMARY KEY,
   user_id VARCHAR(20) NOT NULL,
   start_time TIMESTAMP NOT NULL,
-  end_time TIMESTAMP
+  time_taken INT
 );
