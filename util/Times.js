@@ -9,26 +9,21 @@ function start(msg) {
 		"times (user_id, start_time) " +
 		"SELECT '" + msg.author.id +
 		"', '" + db.dateTime() + "' " +
-		/*"RETURNING user_id " +*/
 		"WHERE NOT EXISTS (" + 
 			"SELECT 1 FROM times WHERE " +
 			"user_id = '" + msg.author.id +
 			"' AND time_taken is NULL" +
-		") RETURNING * ;";
+		") RETURNING id ;";
 
 	let result = db.getRows(query, (r,e) => {
-	if (!e) {
-		if (r.rows.length) { // insert worked
-			msg.reply("time started.");
+		if (!e) {
+			if (r.rows.length) { // insert worked
+				msg.reply("time started.");
+			}
+		}else {
+			throw e;
 		}
-	}else {
-		throw e;
-	}
 	});
-/*
-	if (!result.error) {
-		msg.reply("time started.");
-	}*/
 }
 
 function stop(msg) {
