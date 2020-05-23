@@ -1,20 +1,30 @@
 
 const db = require("./Database.js");
 
+const max_time = 3600; // 1 hour
+
 function start(msg) {
+	// does not update start_time after multiple --start's
 	let query = "INSERT INTO " +
 		"times (user_id, start_time) " +
-		"VALUES ('" +
-			msg.author.id + "', '" +
-			db.dateTime() + "');";
+		"SELECT '" + msg.author.id +
+		"', '" + db.dateTime() + "' " +
+		/*"RETURNING user_id " +*/
+		"WHERE NOT EXISTS (" + 
+			"SELECT 1 FROM times WHERE " +
+			"user_id = '" + msg.author.id +
+			"' AND time_taken is NULL" +
+		") RETURNING * ;";
 
 	let result = db.getRows(query, (r,e) => {
 	if (!e) {
-msg.reply("time started.");
-}else {
-throw e;
-}
-});
+		if (r.rows.length) { // insert worked
+			msg.reply("time started.");
+		}
+	}else {
+		throw e;
+	}
+	});
 /*
 	if (!result.error) {
 		msg.reply("time started.");
