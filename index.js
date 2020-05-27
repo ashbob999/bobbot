@@ -1,5 +1,32 @@
 require('dotenv').config();
 
+// formats a string
+String.prototype.format = String.prototype.format ||
+function () {
+    "use strict";
+    var str = this.toString();
+    if (arguments.length) {
+        var t = typeof arguments[0];
+        var key;
+        var args = ("string" === t || "number" === t) ?
+            Array.prototype.slice.call(arguments)
+            : arguments[0];
+
+        for (key in args) {
+            str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), args[key]);
+        }
+    }
+    return str;
+};
+
+// copys a string
+String.prototype.copy = String.prototypecopy ||
+function () {
+	"use strict"
+	var str = this.toString();
+	return (" " + str).slice(1);
+}
+
 const util = require("./util");
 
 const Discord = require("discord.js")
@@ -102,7 +129,7 @@ bot.on('message', msg => {
 		if (commands[args[0]].admin) {
 			// is the author admin
 			if (author.id == adminId) {
-				commands[args[0]].func(msg, args, context);
+				commands[args[0]].func(msg, args, content);
 			} else {
 				msg.reply("You do not have permission to use the command '" + args[0] + "'");
 			}
