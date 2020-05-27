@@ -90,9 +90,27 @@ WHERE id IN (
 ) ;
 `;
 
+const show_all = `
+SELECT user_id,
+	   sum(time_taken) AS total_time
+FROM times
+GROUP BY user_id
+ORDER BY total_time
+;
+`;
+
+const show_user = `
+SELECT sum(time_taken) AS total_time
+FROM times
+WHERE user_id = '{id}'
+;
+`;
+
 module.exports = {
 	keywords,
 	start,
 	stop,
 	clean,
+	show_all,
+	show_user,
 }

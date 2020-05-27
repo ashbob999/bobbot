@@ -55,7 +55,7 @@ function clean(msg) {
 	let query = tq.clean.format();
 
 	let result = db.getRows(query, (r,e) => {
-		if (!e) {
+		if (e) {
 			msg.reply("failed to clean the database!");
 			return;
 		}
@@ -68,10 +68,82 @@ function clean(msg) {
 	});
 }
 
+function show(msg, args) {
+	
+	if (args[1]) { // show specific user's time
+		if (args[1].startsWith("<@") && args[1].endsWith(">")) {
+			// gets the user's id from the args
+			let user_id = args[1].slice(2, -1);
+			// gets the member from the user id
+			let member = msg.guild.members.get(user_id);
+			if (member) { // if the user id is valid
+				show_user(msg, member);
+			} else {
+				msg.reply("please mention a valid user");
+			}
+		} else {
+			msg.reply("please mention a user.");
+		}
+	} else { // show all users
+		show_all(msg);
+	}
+
+	//console.log(msg.guild.members.get(args[1].slice(2,-1)).nickname);
+}
+
+function show_all(msg) {
+	// show all users times
+
+	let query = tq.show_all.format();
+
+	db.getRows(query, (r, e) => {
+		if (e) throw e;
+
+		let message = "";
+
+		for (let row of r.rows) {
+			if (msg.guild.members.has(row.user_id)) {
+				let member = msg.guild.members.get(row.user_id);
+				message += `\t${member.displayName}: ${db.secondsToTime(row.total_time)}\n`;
+			}
+		}
+
+		msg.reply("Total Times:\n" + message);
+	});
+}
+
+function show_user(msg, member) {
+	// show specific user's time
+
+	let query = tq.show_user.format({
+		id: member.id,
+	});
+
+	db.getRows(query, (r, e) => {
+		if (e) throw e;
+
+		if (r.rows.length) { // there is a time for user
+			msg.reply(`Time Taken\n ${member.displayName}: ${db.secondsToTime(r.rows[0].total_time)}`);
+		} else { // no time for user
+			msg.reply(`no time for user: ${member.displayName}`);
+		}
+	});
+}
+
+function getUsername(member) {
+return member.displayName;
+	if (member.nickname) {
+		return member.nickname;
+	} else {
+		return member.user.username;
+	}
+}
+
 module.exports = {
 	name: "Times.js",
 	start,
 	stop,
 	cancel,
 	clean,
+	show,
 }

@@ -14,6 +14,7 @@ commands.commandName = {
 	params: 0,
 	desc: "description",
 	usage: "usage",
+	admin: true,
 }
 
 params and whitelist are optional
@@ -54,6 +55,13 @@ commands.clean = {
 	usage: "--clean",
 	admin: true,
 };
+
+commands.show = {
+	func: util.Times.show,
+	whitelist: times_whitelist,
+	desc: "Shows the total times for all users, or specific user",
+	usage: "--show [mention]",
+}
 
 Object.freeze(commands);
 
