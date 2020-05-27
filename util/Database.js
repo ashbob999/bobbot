@@ -37,8 +37,17 @@ function dateTime() {
 	return new Date().toISOString().slice(0, 19).replace("T", " ");
 }
 
+function secondsToTime(sec_num) {
+	let hours = Math.floor(sec_num / 3600);
+	let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+	let seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+	return `${hours} h, ${minutes} m, ${seconds} s`;
+}
+
 module.exports = {
 	name: "Database.js",
 	getRows,
 	dateTime,
+	secondsToTime,
 }
