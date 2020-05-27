@@ -84,9 +84,14 @@ function cancel(msg) {
 	console.log("cancel");
 }
 
+function clean(msg) {
+	console.log("clean");
+}
+
 module.exports = {
 	name: "Times.js",
 	start,
 	stop,
 	cancel,
+	clean,
 }

@@ -23,6 +23,7 @@ params and whitelist are optional
 let times_whitelist = {
 	"shit-talk": undefined,
 	"bot-channel": undefined,
+	"bot-testing": undefined,
 }
 
 commands.start = {
@@ -45,6 +46,13 @@ commands.cancel = {
 	desc: "Cancels the timer",
 	usage: "--cancel",
 }
+
+commands.clean = {
+	func: util.Times.clean,
+	whitelist: times_whitelist,
+	desc: "Cleans the table, by combining rows"
+	usage: "--clean",
+	admin: true,
 
 Object.freeze(commands);
 
