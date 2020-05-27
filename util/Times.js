@@ -56,14 +56,14 @@ WITH start_row AS
 		AND (
 			SELECT time_diff
 			FROM start_row
-			LIMIT 1) > 3600
+			LIMIT 1) > ${max_time}
 )
 
 UPDATE times
 SET time_taken = time_diff
 FROM start_row
 WHERE times.id = start_row.id
-	AND time_diff <= 3600
+	AND time_diff <= ${max_time}
 RETURNING time_taken
 ;`;
 
