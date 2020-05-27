@@ -86,6 +86,56 @@ function cancel(msg) {
 
 function clean(msg) {
 	console.log("clean");
+	
+	let query = `
+WITH summed_time AS
+(
+	SELECT user_id,
+		   sum(time_taken) AS total_time
+	FROM times
+	GROUP BY user_id
+)
+, del_id AS
+(
+	SELECT id
+	FROM (
+		SELECT id,
+		rank() OVER (
+			PARTITION BY user_id
+			ORDER BY time_taken DESC
+		)
+		FROM times
+		WHERE time_taken IS NOT NULL
+	) filtered
+	WHERE RANK > 1
+)
+, updated AS
+(
+	UPDATE times SET time_taken = st.total_time
+	FROM summed_time AS st
+	WHERE times.user_id = st.user_id
+		AND time_taken IS NOT NULL
+)
+
+DELETE
+FROM times
+WHERE id IN (
+	SELECT id
+	FROM del_id
+) ;`;
+
+	let result = db.getRows(query, (r,e) => {
+		if (!e) {
+			msg.reply("failed to clean the database!");
+			return;
+		}
+
+		if (r.rowCount > 0) {
+			msg.reply("Cleaned " + r.rowCount + " rows from the database.");
+		} else {
+			msg.reply("no rows to clean.");
+		}
+	});
 }
 
 module.exports = {
