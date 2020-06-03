@@ -43,7 +43,7 @@ const config = {
 
 const commands = require("./Commands.js").Commands;
 
-// rewuire the command helper file
+// require the command helper file
 const commandHandler = require("./commandHelper.js");
 
 bot.login(TOKEN);
@@ -108,7 +108,7 @@ bot.on('message', msg => {
 
 	if (args[0] in commands) {
 		// handle the command
-		commandHelper(msg, args, content, false);
+		commandHandler(msg, args, content, false);
 	} else { // not a valid command
 		msg.reply("Invalid command!");
 	}

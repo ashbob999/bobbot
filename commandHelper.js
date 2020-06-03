@@ -25,8 +25,9 @@ function handleCommand(msg, args, content, isAdmin) {
 
 	//if the command requires admin
 	if (commands[args[0]].admin) {
-		// is the author admin
-		if (author.id == adminId) {
+		// is the author administrator
+		if (msg.member.permissions.has("ADMINISTRATOR")) {
+		//if (author.id == adminId) {
 			commands[args[0]].func(msg, args, content);
 		} else {
 			msg.reply("You do not have permission to use the command '" + args[0] + "'");
