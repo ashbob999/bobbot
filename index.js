@@ -48,12 +48,13 @@ const commandHandler = require("./commandHelper.js");
 
 const fs = require("fs");
 
+// setup commands to an empty collection
 bot.commands = new Discord.Collection();
 
+// get list of .js files from command folder
+// excludes .js files thatbstart with and underscore
 const commandFiles = fs.readdirSync('./commands')
 					   .filter(file => file.endsWith('.js') && !file.startsWith("_"));
-
-console.log(commandFiles);
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -62,8 +63,6 @@ for (const file of commandFiles) {
 	// with the key as the command name and the value as the exported module
 	bot.commands.set(command.name, command);
 }
-
-console.log(bot.commands);
 
 bot.login(TOKEN);
 
