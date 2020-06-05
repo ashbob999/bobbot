@@ -13,15 +13,15 @@ function handleCommand(bot, command, info) {
 	// gets whether the author is admin
 	let isAdmin = info.msg.member.permissions.has("ADMINISTRATOR");
 	// does the command require admin
-	if (commands[args[0]].admin) {
+	if (command.admin) {
 		// is the author admin
 		if (isAdmin) {
-			commands[args[0]].func(bot, isAdmin);
+			command.func(bot, isAdmin);
 		} else {
 			msg.reply("You do not have permission to use the command '" + args[0] + "'");
 		}
 	} else { // command does not require admin
-		commands[args[0]].func(bot, isAdmin);
+		command.func(bot, isAdmin);
 	}
 }
 
