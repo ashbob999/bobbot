@@ -10,19 +10,6 @@ function handleCommand(msg, args, content, command) {
 		}
 	}
 
-	let missingArgs;
-	// does the command require extra args
-	if (commands[args[0]].params) {
-		// is there less than the minimum amount of args
-		if (args.length - 1 < commands[args[0]].params) {
-			// calculates the number of missing args
-			missingArgs = commands[args[0]].params - (args.length - 1);
-			/* reword this */
-			msg.reply("The command '" + args[0] + "' requires " + commands[args[0]].params + " arguments, (only " + (args.length -1) + " were given");
-			return;
-		}
-	}
-
 	// gets whether the author is admin
 	let isAdmin = msg.member.permissions.has("ADMINISTRATOR");
 	// does the command require admin
