@@ -130,15 +130,13 @@ bot.on('message', msg => {
 		return;
 	}
 
-	if (bot.commands.has(args[0])) {
-		// handle the command
-		let info = {
-			message: msg,
-			arguments: args,
-			content: content,
-		};
-		let error = commandHandler(bot, bot.commands.get(args[0]), info);
-	} else { // not a valid command
-		msg.reply("Invalid command!");
-	}
+	let info = {
+		message: msg,
+		arguments: args,
+		content: content,
+	};
+	
+	let error = commandHandler(bot, bot.commands.get(args[0]), info);
+
+	console.log(error);
 });

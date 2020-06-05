@@ -3,7 +3,16 @@ const commands = require("./Commands.js").Commands;
 
 const commandErrors = require("./util/ErrorTypes.js");
 
-function handleCommand(bot, command, info) {
+function handleCommand(bot, info) {
+
+	if (!bot.commands.has(info.args[0])) {
+		// the command is invalid
+		msg.reply("Invalid command!");
+		return commandErrors.INVALID_COMMAND;
+	}
+
+	let command = bot.commands.get(info.args[0]);
+
 	// if the command has a channel whitelist
 	if (command.whitelist) {
 		// if the channel is not in the whitelist then return
