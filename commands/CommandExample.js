@@ -1,5 +1,5 @@
 
-function example_func(msg) {
+function example_func(bot, info) {
 	msg.channel.send("This is an example command");
 }
 
