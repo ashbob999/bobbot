@@ -2,9 +2,9 @@
 // list of error types for a message
 // (effectively an enum)
 const errors = {
-	REQUIRES_ADMIN: "requires_admin",
-	INVALID_COMMAND: "invalid_command",
-	MISSING_ARGS: "missing_args",
+	REQUIRES_ADMIN: "ERROR_requires_admin",
+	INVALID_COMMAND: "ERROR_invalid_command",
+	MISSING_ARGS: "ERROR_missing_args",
 };
 
 // make values immutable
