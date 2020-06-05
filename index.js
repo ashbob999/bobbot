@@ -64,6 +64,10 @@ for (const file of commandFiles) {
 	bot.commands.set(command.name, command);
 }
 
+const commandErrors = require("./util/ErrorTypes.js");
+
+bot.commandErrors = commandErrors;
+
 bot.login(TOKEN);
 
 bot.on('ready', () => {
@@ -128,9 +132,9 @@ bot.on('message', msg => {
 		return;
 	}
 
-	if (args[0] in commands) {
+	if (bot.commands.has(args[0])) {
 		// handle the command
-		commandHandler(msg, args, content, false);
+		commandHandler(msg, args, content);
 	} else { // not a valid command
 		msg.reply("Invalid command!");
 	}
