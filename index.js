@@ -46,6 +46,25 @@ const commands = require("./Commands.js").Commands;
 // require the command helper file
 const commandHandler = require("./commandHelper.js");
 
+const fs = require("fs");
+
+bot.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands')
+					   .filter(file => file.endsWith('.js') && !file.startsWith("_"));
+
+console.log(commandFiles);
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+
+	// set a new item in the Collection
+	// with the key as the command name and the value as the exported module
+	bot.commands.set(command.name, command);
+}
+
+console.log(bot.commands);
+
 bot.login(TOKEN);
 
 bot.on('ready', () => {

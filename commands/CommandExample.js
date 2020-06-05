@@ -10,4 +10,5 @@ module.exports = {
 	help: "This is some help",
 	usage: "command_example",
 	aliases: ["cmd_exmp"],
+	whitelist: undefined,
 }

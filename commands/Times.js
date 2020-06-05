@@ -1,6 +1,6 @@
 
-const db = require("./Database.js");
-const tq = require("./TimesQuery.js");
+const db = require("../util/Database.js");
+const tq = require("../util/TimesQuery.js");
 
 const max_time = 3600; // 1 hour
 
