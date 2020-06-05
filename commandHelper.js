@@ -1,12 +1,14 @@
 
 const commands = require("./Commands.js").Commands;
 
+const commandErrors = require("./util/ErrorTypes.js");
+
 function handleCommand(bot, command, info) {
 	// if the command has a channel whitelist
 	if (command.whitelist) {
 		// if the channel is not in the whitelist then return
 		if (!Object.values(command.whitelist).includes(info.msg.channel.id)) {
-			return;
+			return commandErrors.NOT_WHITELISTED;
 		}
 	}
 
@@ -19,12 +21,13 @@ function handleCommand(bot, command, info) {
 	if (command.admin) {
 		// is the author admin
 		if (isAdmin) {
-			command.func(bot, info);
+			return command.func(bot, info);
 		} else {
 			msg.reply("You do not have permission to use the command '" + args[0] + "'");
+			return commandErrors.REQUIRES_ADMIN;
 		}
 	} else { // command does not require admin
-		command.func(bot, info);
+		return command.func(bot, info);
 	}
 }
 

@@ -66,8 +66,6 @@ for (const file of commandFiles) {
 
 const commandErrors = require("./util/ErrorTypes.js");
 
-bot.commandErrors = commandErrors;
-
 bot.login(TOKEN);
 
 bot.on('ready', () => {
@@ -139,7 +137,7 @@ bot.on('message', msg => {
 			arguments: args,
 			content: content,
 		};
-		commandHandler(bot, bot.commands.get(args[0]), info);
+		let error = commandHandler(bot, bot.commands.get(args[0]), info);
 	} else { // not a valid command
 		msg.reply("Invalid command!");
 	}
