@@ -75,7 +75,6 @@ bot.on('ready', () => {
     	for (let [channelId, channel] of value.channels) {
     		// loops through each command
 			bot.commands.forEach((v, k) => {
-				//let wl = commands[cmd].whitelist;
 				// does the command have a whitelist
 				if (k.whitelist) {
 					// if channel name is in the whitelist
@@ -135,6 +134,4 @@ bot.on('message', msg => {
 	} else { // not a valid command
 		msg.reply("Invalid command!");
 	}
-
-    // msg.channel.send() without @
 });
