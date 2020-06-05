@@ -5,6 +5,7 @@ const errors = {
 	REQUIRES_ADMIN: "ERROR_requires_admin",
 	INVALID_COMMAND: "ERROR_invalid_command",
 	MISSING_ARGS: "ERROR_missing_args",
+	NOT_WHITELISETED: "ERROR_channel_not_whitelisted",
 };
 
 // make values immutable
