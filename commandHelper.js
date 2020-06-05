@@ -1,11 +1,11 @@
 
 const commands = require("./Commands.js").Commands;
 
-function handleCommand(msg, args, content, isAdmin) {
+function handleCommand(msg, args, content, command) {
 	// if the command has a channel whitelist
-	if (commands[args[0]].whitelist) {
+	if (command.whitelist) {
 		// if the channel is not in the whitelist then return
-		if (!Object.values(commands[args[0]].whitelist).includes(msg.channel.id)) {
+		if (!Object.values(command.whitelist).includes(msg.channel.id)) {
 			return;
 		}
 	}
