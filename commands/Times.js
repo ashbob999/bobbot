@@ -140,7 +140,7 @@ return member.displayName;
 }
 
 module.exports = {
-	name: "Times.js",
+	name: "times",
 	start,
 	stop,
 	cancel,
