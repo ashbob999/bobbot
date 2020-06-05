@@ -134,7 +134,7 @@ bot.on('message', msg => {
 
 	if (bot.commands.has(args[0])) {
 		// handle the command
-		commandHandler(msg, args, content);
+		commandHandler(msg, args, content, bot.commands.get(args[0]));
 	} else { // not a valid command
 		msg.reply("Invalid command!");
 	}
