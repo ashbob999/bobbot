@@ -74,16 +74,21 @@ bot.on('ready', () => {
 		//loops through each channel the bot is in
     	for (let [channelId, channel] of value.channels) {
     		// loops through each command
-			for (let cmd in commands) {
-				let wl = commands[cmd].whitelist;
-				// if cmd is in the whitelist
-				if (channel.name in wl) {
-					// bind channelId to channel name
-					commands[cmd].whitelist[channel.name] = channelId;
+			bot.commands.forEach((v, k) => {
+				//let wl = commands[cmd].whitelist;
+				// does the command have a whitelist
+				if (k.whitelist) {
+					// if channel name is in the whitelist
+					if (channel.name in k.whitelist) {
+						// bind channelId to channel name
+						k.whitelist[channel.name] = channelId;
+					}
 				}
-			}
-   	 }
+			});
+		}
     }
+
+	
 });
 
 bot.on('message', msg => {
