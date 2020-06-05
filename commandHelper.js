@@ -23,17 +23,18 @@ function handleCommand(msg, args, content, isAdmin) {
 		}
 	}
 
-	//if the command requires admin
+	// gets whether the author is admin
+	let isAdmin = msg.member.permissions.has("ADMINISTRATOR");
+	// does the command require admin
 	if (commands[args[0]].admin) {
-		// is the author administrator
-		if (msg.member.permissions.has("ADMINISTRATOR")) {
-		//if (author.id == adminId) {
-			commands[args[0]].func(msg, args, content);
+		// is the author admin
+		if (isAdmin) {
+			commands[args[0]].func(msg, args, content, isAdmin);
 		} else {
 			msg.reply("You do not have permission to use the command '" + args[0] + "'");
 		}
 	} else { // command does not require admin
-		commands[args[0]].func(msg, args, content);
+		commands[args[0]].func(msg, args, content, isAdmin);
 	}
 }
 
