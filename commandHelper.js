@@ -7,7 +7,7 @@ function handleCommand(bot, info) {
 
 	if (!bot.commands.has(info.arguments[0])) {
 		// the command is invalid
-		msg.reply("Invalid command!");
+		info.message.reply("Invalid command!");
 		return commandErrors.INVALID_COMMAND;
 	}
 
@@ -16,7 +16,7 @@ function handleCommand(bot, info) {
 	// if the command has a channel whitelist
 	if (command.whitelist) {
 		// if the channel is not in the whitelist then return
-		if (!Object.values(command.whitelist).includes(info.msg.channel.id)) {
+		if (!Object.values(command.whitelist).includes(info.message.channel.id)) {
 			return commandErrors.NOT_WHITELISTED;
 		}
 	}
