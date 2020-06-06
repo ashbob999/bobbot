@@ -1,4 +1,6 @@
 
+const ce = require("../util/ErrorTypes.js");
+
 const db = require("../util/Database.js");
 const tq = require("../util/TimesQuery.js");
 
@@ -139,11 +141,41 @@ return member.displayName;
 	}
 }
 
+function timesMain(bot, info) {
+	switch (info.arguments[1]) {
+		case "start":
+			start(info.message);
+			break;
+		case "stop":
+			stop(info.message);
+			break;
+		case "cancel":
+			cancel(info.message);
+			break;
+		case "clean":
+			if (info.isAdmin) {
+				clean(info.message);
+			} else {
+				return ce.REQUIRES_ADMIN;
+			}
+			break;
+		default:
+			return ce.INVALID_COMMAND;
+	}
+}
+
+let times_whitelist = {
+	"shit-talk": undefined,
+	"bot-channel": undefined,
+	"bot-testing": undefined,
+};
+
 module.exports = {
 	name: "times",
-	start,
-	stop,
-	cancel,
-	clean,
-	show,
-}
+	func: timesMain,
+	admin: false,
+	help: "All the times functions",
+	usage: "--times [start/stop/clean]",
+	aliases: [],
+	whitelist: times_whitelist,
+};
