@@ -88,10 +88,6 @@ bot.on('ready', () => {
 			});
 		}
     }
-bot.commands.forEach((v,k) => {
-	console.log(k,v);
-});
-	
 });
 
 bot.on('message', msg => {
