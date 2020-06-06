@@ -164,7 +164,7 @@ function timesMain(bot, info) {
 	}
 }
 
-let times_whitelist = {
+const times_whitelist = {
 	"shit-talk": undefined,
 	"bot-channel": undefined,
 	"bot-testing": undefined,
