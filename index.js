@@ -78,17 +78,19 @@ bot.on('ready', () => {
     		// loops through each command
 			bot.commands.forEach((v, k) => {
 				// does the command have a whitelist
-				if (k.whitelist) {
+				if (v.whitelist) {
 					// if channel name is in the whitelist
-					if (channel.name in k.whitelist) {
+					if (channel.name in v.whitelist) {
 						// bind channelId to channel name
-						k.whitelist[channel.name] = channelId;
+						v.whitelist[channel.name] = channelId;
 					}
 				}
 			});
 		}
     }
-
+bot.commands.forEach((v,k) => {
+	console.log(k,v);
+});
 	
 });
 
