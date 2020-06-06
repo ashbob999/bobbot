@@ -1,6 +1,6 @@
 
 function example_func(bot, info) {
-	msg.channel.send("This is an example command");
+	info.message.channel.send("This is an example command");
 }
 
 module.exports = {

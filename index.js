@@ -136,7 +136,7 @@ bot.on('message', msg => {
 		content: content,
 	};
 	
-	let error = commandHandler(bot, bot.commands.get(args[0]), info);
+	let error = commandHandler(bot, info);
 
 	console.log(error);
 });

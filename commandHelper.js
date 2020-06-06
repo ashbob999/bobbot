@@ -5,13 +5,13 @@ const commandErrors = require("./util/ErrorTypes.js");
 
 function handleCommand(bot, info) {
 
-	if (!bot.commands.has(info.args[0])) {
+	if (!bot.commands.has(info.arguments[0])) {
 		// the command is invalid
 		msg.reply("Invalid command!");
 		return commandErrors.INVALID_COMMAND;
 	}
 
-	let command = bot.commands.get(info.args[0]);
+	let command = bot.commands.get(info.arguments[0]);
 
 	// if the command has a channel whitelist
 	if (command.whitelist) {
@@ -22,7 +22,7 @@ function handleCommand(bot, info) {
 	}
 
 	// gets whether the author is admin
-	let isAdmin = info.msg.member.permissions.has("ADMINISTRATOR");
+	let isAdmin = info.message.member.permissions.has("ADMINISTRATOR");
 	
 	info.isAdmin = isAdmin;
 
@@ -32,7 +32,7 @@ function handleCommand(bot, info) {
 		if (isAdmin) {
 			return command.func(bot, info);
 		} else {
-			msg.reply("You do not have permission to use the command '" + args[0] + "'");
+			info.message.reply("You do not have permission to use the command '" + args[0] + "'");
 			return commandErrors.REQUIRES_ADMIN;
 		}
 	} else { // command does not require admin
