@@ -3,8 +3,6 @@ require('dotenv').config();
 // import all of the extended functions
 require("./ExtendedFunctions.js");
 
-//const util = require("./util");
-
 const Discord = require("discord.js")
 
 const bot = new Discord.Client();
@@ -16,8 +14,6 @@ const adminId = "445907614480728065";
 const config = {
 	prefix: "--",
 }
-
-const commands = require("./Commands.js").Commands;
 
 // require the command helper file
 const commandHandler = require("./commandHelper.js");
@@ -95,14 +91,6 @@ bot.on('message', msg => {
 	/*
 	if (msg.mentions.users.has(bot.user.id)) {
 		console.log("mention");
-	}
-	*/
-	
-	/* no longer works
-	// if help command sent
-	if (args[0] == "help") {
-		util.Help.showHelp(msg, args);
-		return;
 	}
 	*/
 
