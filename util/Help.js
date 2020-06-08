@@ -1,4 +1,5 @@
 
+// some circular dependency here
 const commands = require("./../Commands.js").Commands;
 
 function showHelp(msg, args) {

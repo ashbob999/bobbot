@@ -27,7 +27,7 @@ function () {
 	return (" " + str).slice(1);
 }
 
-const util = require("./util");
+//const util = require("./util");
 
 const Discord = require("discord.js")
 
@@ -122,11 +122,13 @@ bot.on('message', msg => {
 	}
 	*/
 	
+	/* no longer works
 	// if help command sent
 	if (args[0] == "help") {
 		util.Help.showHelp(msg, args);
 		return;
 	}
+	*/
 
 	let info = {
 		message: msg,
