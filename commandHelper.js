@@ -1,6 +1,4 @@
 
-const commands = require("./Commands.js").Commands;
-
 const commandErrors = require("./util/ErrorTypes.js");
 
 function handleCommand(bot, info) {
