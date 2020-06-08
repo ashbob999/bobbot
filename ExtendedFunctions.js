@@ -1,4 +1,3 @@
-console.log("ef");
 
 // formats a string
 String.prototype.format = String.prototype.format ||
