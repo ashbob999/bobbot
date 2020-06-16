@@ -160,7 +160,7 @@ function timesMain(bot, info) {
 			}
 			break;
 		default:
-			return ce.INVALID_COMMAND;
+			return ce.INVALID_SUB_COMMAND;
 	}
 }
 
