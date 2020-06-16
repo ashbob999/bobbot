@@ -9,8 +9,6 @@ const bot = new Discord.Client();
 
 const TOKEN = process.env.DEV == "true" ? process.env.TEST_BOT : process.env.BOB_BOT;
 
-const adminId = "445907614480728065";
-
 const config = {
 	prefix: "--",
 }
