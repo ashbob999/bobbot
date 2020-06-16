@@ -102,5 +102,22 @@ bot.on('message', msg => {
 	
 	let error = commandHandler(bot, info);
 
+	switch (error) {
+		case commandErrors.INVALID_COMMAND:
+			msg.channel.send(`Invalid Command \`${args[0]}\``);
+			break;
+		case commandErrors.INVALID_SUB_COMMAND:
+			msg.channel.send(`Invalid Sub Command: \`${args[1]}\` for main command \`${args[0]}\``);
+			break;
+		case commandErrors.REQUIRES_ADMIN:
+			msg.channel.send(`Command \`${args[0]}\` requires Admin permission`);
+			break;
+		case commandErrors.REQUIRES_ADMIN_SUB:
+			msg.channel.send(`Command \`${args[0]} ${args[1]}\` requires Admin permission`);
+			break;
+		default:
+			break;
+	}
+
 	console.log(error);
 });

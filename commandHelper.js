@@ -5,7 +5,6 @@ function handleCommand(bot, info) {
 
 	if (!bot.commands.has(info.arguments[0])) {
 		// the command is invalid
-		info.message.reply("Invalid command!");
 		return commandErrors.INVALID_COMMAND;
 	}
 
@@ -30,7 +29,6 @@ function handleCommand(bot, info) {
 		if (isAdmin) {
 			return command.func(bot, info);
 		} else {
-			info.message.reply("You do not have permission to use the command '" + args[0] + "'");
 			return commandErrors.REQUIRES_ADMIN;
 		}
 	} else { // command does not require admin
