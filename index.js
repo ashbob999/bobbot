@@ -1,33 +1,7 @@
 require('dotenv').config();
 
-// formats a string
-String.prototype.format = String.prototype.format ||
-function () {
-    "use strict";
-    var str = this.toString();
-    if (arguments.length) {
-        var t = typeof arguments[0];
-        var key;
-        var args = ("string" === t || "number" === t) ?
-            Array.prototype.slice.call(arguments)
-            : arguments[0];
-
-        for (key in args) {
-            str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), args[key]);
-        }
-    }
-    return str;
-};
-
-// copys a string
-String.prototype.copy = String.prototypecopy ||
-function () {
-	"use strict"
-	var str = this.toString();
-	return (" " + str).slice(1);
-}
-
-const util = require("./util");
+// import all of the extended functions
+require("./ExtendedFunctions.js");
 
 const Discord = require("discord.js")
 
@@ -35,13 +9,32 @@ const bot = new Discord.Client();
 
 const TOKEN = process.env.DEV == "true" ? process.env.TEST_BOT : process.env.BOB_BOT;
 
-const adminId = "445907614480728065";
-
 const config = {
 	prefix: "--",
 }
 
-const commands = require("./Commands.js").Commands;
+// require the command helper file
+const commandHandler = require("./commandHelper.js");
+
+const fs = require("fs");
+
+// setup commands to an empty collection
+bot.commands = new Discord.Collection();
+
+// get list of .js files from command folder
+// excludes .js files thatbstart with and underscore
+const commandFiles = fs.readdirSync('./commands')
+					   .filter(file => file.endsWith('.js') && !file.startsWith("_"));
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+
+	// set a new item in the Collection
+	// with the key as the command name and the value as the exported module
+	bot.commands.set(command.name, command);
+}
+
+const commandErrors = require("./util/ErrorTypes.js");
 
 bot.login(TOKEN);
 
@@ -53,15 +46,17 @@ bot.on('ready', () => {
 		//loops through each channel the bot is in
     	for (let [channelId, channel] of value.channels) {
     		// loops through each command
-			for (let cmd in commands) {
-				let wl = commands[cmd].whitelist;
-				// if cmd is in the whitelist
-				if (channel.name in wl) {
-					// bind channelId to channel name
-					commands[cmd].whitelist[channel.name] = channelId;
+			bot.commands.forEach((v, k) => {
+				// does the command have a whitelist
+				if (v.whitelist) {
+					// if channel name is in the whitelist
+					if (channel.name in v.whitelist) {
+						// bind channelId to channel name
+						v.whitelist[channel.name] = channelId;
+					}
 				}
-			}
-   	 }
+			});
+		}
     }
 });
 
@@ -96,49 +91,31 @@ bot.on('message', msg => {
 		console.log("mention");
 	}
 	*/
+
+	let info = {
+		message: msg,
+		arguments: args,
+		content: content,
+	};
 	
-	// if help command sent
-	if (args[0] == "help") {
-		util.Help.showHelp(msg, args);
-		return;
+	let error = commandHandler(bot, info);
+
+	switch (error) {
+		case commandErrors.INVALID_COMMAND:
+			msg.channel.send(`Invalid Command \`${args[0]}\``);
+			break;
+		case commandErrors.INVALID_SUB_COMMAND:
+			msg.channel.send(`Invalid Sub Command: \`${args[1]}\` for main command \`${args[0]}\``);
+			break;
+		case commandErrors.REQUIRES_ADMIN:
+			msg.channel.send(`Command \`${args[0]}\` requires Admin permission`);
+			break;
+		case commandErrors.REQUIRES_ADMIN_SUB:
+			msg.channel.send(`Command \`${args[0]} ${args[1]}\` requires Admin permission`);
+			break;
+		default:
+			break;
 	}
 
-	if (args[0] in commands) {
-		// if the command has a channel whitelist
-		if (commands[args[0]].whitelist) {
-			// if the channel is not in the whitelist then return
-			if (!Object.values(commands[args[0]].whitelist).includes(msg.channel.id)) {
-				return;
-			}
-		}
-
-		let missingArgs;
-		// does the command require extra args
-		if (commands[args[0]].params) {
-			// is there less than the minimum amount of args
-			if (args.length - 1 < commands[args[0]].params) {
-				// calculates the number of missing args
-				missingArgs = commands[args[0]].params - (args.length - 1);
-				/* reword this */
-				msg.reply("The command '" + args[0] + "' requires " + commands[args[0]].params + " arguments, (only " + (args.length -1) + " were given");
-				return;
-			}
-		}
-
-		//if the command requires admin
-		if (commands[args[0]].admin) {
-			// is the author admin
-			if (author.id == adminId) {
-				commands[args[0]].func(msg, args, content);
-			} else {
-				msg.reply("You do not have permission to use the command '" + args[0] + "'");
-			}
-		} else { // command does not require admin
-			commands[args[0]].func(msg, args, content);
-		}
-	} else { // not a valid command
-		msg.reply("Invalid command!");
-	}
-
-    // msg.channel.send() without @
+	console.log(error);
 });

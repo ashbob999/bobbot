@@ -1,6 +1,8 @@
 
-const db = require("./Database.js");
-const tq = require("./TimesQuery.js");
+const ce = require("../util/ErrorTypes.js");
+
+const db = require("../util/Database.js");
+const tq = require("../util/TimesQuery.js");
 
 const max_time = 3600; // 1 hour
 
@@ -139,11 +141,41 @@ return member.displayName;
 	}
 }
 
-module.exports = {
-	name: "Times.js",
-	start,
-	stop,
-	cancel,
-	clean,
-	show,
+function timesMain(bot, info) {
+	switch (info.arguments[1]) {
+		case "start":
+			start(info.message);
+			break;
+		case "stop":
+			stop(info.message);
+			break;
+		case "cancel":
+			cancel(info.message);
+			break;
+		case "clean":
+			if (info.isAdmin) {
+				clean(info.message);
+			} else {
+				return ce.REQUIRES_ADMIN_SUB;
+			}
+			break;
+		default:
+			return ce.INVALID_SUB_COMMAND;
+	}
 }
+
+const times_whitelist = {
+	"shit-talk": undefined,
+	"bot-channel": undefined,
+	"bot-testing": undefined,
+};
+
+module.exports = {
+	name: "times",
+	func: timesMain,
+	admin: false,
+	help: "All the times functions",
+	usage: "--times [start/stop/clean]",
+	aliases: [],
+	whitelist: times_whitelist,
+};
