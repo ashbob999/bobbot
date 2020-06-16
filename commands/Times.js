@@ -156,7 +156,7 @@ function timesMain(bot, info) {
 			if (info.isAdmin) {
 				clean(info.message);
 			} else {
-				return ce.REQUIRES_ADMIN;
+				return ce.REQUIRES_ADMIN_SUB;
 			}
 			break;
 		default:
