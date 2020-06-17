@@ -23,7 +23,7 @@ bot.commands = new Discord.Collection();
 
 // get list of .js files from command folder
 // excludes .js files thatbstart with and underscore
-const commandFiles = fs.readdirSync('./commands')
+const commandFiles = fs.readdirSync('./Commands')
 					   .filter(file => file.endsWith('.js') && !file.startsWith("_"));
 
 for (const file of commandFiles) {
