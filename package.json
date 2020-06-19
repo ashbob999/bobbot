@@ -11,7 +11,11 @@
   "dependencies": {
     "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
-    "nodejs": "0.0.0"
+    "pg-connection-string": "^2.2.3",
+    "pg-pool": "^3.2.1",
+    "pg-protocol": "^1.2.4",
+    "pg-types": "^3.0.0",
+    "pgpass": "^1.0.2"
   },
   "repository": {
     "type": "git",
