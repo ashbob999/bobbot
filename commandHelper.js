@@ -1,3 +1,4 @@
+"use strict"
 
 const commandErrors = require("./util/ErrorTypes.js");
 
