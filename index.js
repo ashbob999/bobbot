@@ -1,3 +1,4 @@
+"use strict"
 require('dotenv').config();
 
 // import all of the extended functions
