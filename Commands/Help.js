@@ -1,3 +1,4 @@
+"use strict"
 
 function help(bot, info) {
 	if (info.arguments.length > 1) {

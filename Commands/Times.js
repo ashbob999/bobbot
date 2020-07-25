@@ -1,3 +1,4 @@
+"use strict"
 
 const ce = require("../util/ErrorTypes.js");
 

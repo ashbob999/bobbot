@@ -1,3 +1,4 @@
+"use strict"
 
 function example_func(bot, info) {
 	info.message.channel.send("This is an example command");

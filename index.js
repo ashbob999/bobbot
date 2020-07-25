@@ -1,4 +1,18 @@
+"use strict"
 require('dotenv').config();
+
+// create http server
+
+const http = require("http");
+
+let server = http.createServer((req, res) => {
+	res.writeHead(200, {"Content-Type": "text/plain"});
+	res.end("Bot is On");
+});
+
+server.listen(process.env.PORT || 8080);
+
+// http server end
 
 // import all of the extended functions
 require("./ExtendedFunctions.js");
