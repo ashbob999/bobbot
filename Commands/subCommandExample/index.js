@@ -1,11 +1,16 @@
 
+function base(bot, info) {
+	info.message.channel.send("base of sub command");
+}
+
 module.exports = {
 	name: "sub_command_example",
 	sub: true,
+	func: base,
 	admin: false,
 	help: "This is some help",
 	usage: "sub_command_example",
-	aliases: ["cmd_exmp"],
+	aliases: ["sub_examp"],
 	whitelist: undefined,
 
 	cmds: {
