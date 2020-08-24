@@ -9,6 +9,6 @@ module.exports = {
 	admin: false,
 	help: "This is some help for c2",
 	usage: "c2",
-	aliases: [],
+	aliases: ["rc2"],
 	whitelist: undefined,
 }
