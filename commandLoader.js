@@ -14,6 +14,11 @@ function load(cmds) {
 		// set a new item in the Collection
 		// with the key as the command name and the value as the exported module
 		cmds.set(command.name, command);
+
+		// set command aliases
+		for (const alias of command.aliases) {
+			cmds.set(alias, command);
+		}
 	}
 }
 
@@ -27,9 +32,23 @@ function loadSubs(cmds) {
 	for (const folder of commandFolders) {
 		const command = require(`./Commands/${folder}`);
 
+		// update amd set sub command aliases
+		Object.keys(command.cmds).forEach(subCmdName => {
+			let subCmd = command.cmds[subCmdName];
+
+			for (const alias of subCmd.aliases) {
+				command.cmds[alias] = subCmd;
+			}
+		});
+
 		// set a new item in the Collection
 		// with the key as the command name and the value as the exported module
 		cmds.set(command.name, command);
+
+		// set commnad aliases
+		for (const alias of command.aliases) {
+			cmds.set(alias, command);
+		}
 	}
 }
 
