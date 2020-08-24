@@ -35,18 +35,11 @@ const fs = require("fs");
 // setup commands to an empty collection
 bot.commands = new Discord.Collection();
 
-// get list of .js files from command folder
-// excludes .js files thatbstart with and underscore
-const commandFiles = fs.readdirSync('./Commands')
-					   .filter(file => file.endsWith('.js') && !file.startsWith("_"));
+// load commands from files
+const commandLoader = require("./commandLoader.js");
 
-for (const file of commandFiles) {
-	const command = require(`./Commands/${file}`);
-
-	// set a new item in the Collection
-	// with the key as the command name and the value as the exported module
-	bot.commands.set(command.name, command);
-}
+commandLoader.load(bot.commands);
+commandLoader.loadSubs(bot.commands);
 
 const commandErrors = require("./util/ErrorTypes.js");
 
@@ -119,13 +112,13 @@ bot.on('message', msg => {
 			msg.channel.send(`Invalid Command \`${args[0]}\``);
 			break;
 		case commandErrors.INVALID_SUB_COMMAND:
-			msg.channel.send(`Invalid Sub Command: \`${args[1]}\` for main command \`${args[0]}\``);
+			msg.channel.send(`Invalid Sub Command: \`${args[0]}\` for main command \`${info.parentCmd}\``);
 			break;
 		case commandErrors.REQUIRES_ADMIN:
 			msg.channel.send(`Command \`${args[0]}\` requires Admin permission`);
 			break;
 		case commandErrors.REQUIRES_ADMIN_SUB:
-			msg.channel.send(`Command \`${args[0]} ${args[1]}\` requires Admin permission`);
+			msg.channel.send(`Command \`${info.parentCmd} ${args[0]}\` requires Admin permission`);
 			break;
 		default:
 			break;

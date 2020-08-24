@@ -10,6 +10,6 @@ module.exports = {
 	admin: false,
 	help: "This is some help",
 	usage: "command_example",
-	aliases: ["cmd_exmp"],
+	aliases: ["cmd_examp"],
 	whitelist: undefined,
 }
