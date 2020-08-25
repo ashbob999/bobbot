@@ -49,10 +49,10 @@ function help(bot, info) {
 			return commandErrors.INVALID_ARGS;
 		}
 	} else {
-		let msg = "All Commands:\n";
-		msg += "use `help <command>` for help on a specific command.\n"
+		let msg = "***use `help <command>` for help on a specific command.***\n"
+		msg += "**All Commands:**\n";
 		bot.commands.forEach((v, k) => {
-			msg += "\t" + k + "\n";
+			msg += "\t\t" + k + "\n";
 		});
 		info.message.channel.send(msg);
 	}
