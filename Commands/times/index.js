@@ -6,15 +6,21 @@ const times_whitelist = {
 	"bot-testing": undefined,
 };
 
+function base(bot, info) {
+}
+
+module.db = require("../../util/Database.js");
+module.timesQuery = require("./TimesQuery.js");
+
 module.exports = {
 	name: "times",
 	sub: true,
-	func: "",
+	func: base,
 	admin: false,
 	help: "Runs all the time commands",
-	usage: "",
+	usage: "--times [start/stop/clean]",
 	aliases: [],
-	whitelist: undefined,
+	whitelist: times_whitelist,
 
 	cmds: {
 		start: require("./start.js"),
