@@ -41,6 +41,11 @@ function help(bot, info) {
 
 			if (isSubCommand) {
 				msg += "**parent command:** " + parent + "\n";
+
+				msg += "**sub commands:**\n"
+				Object.keys(command.cmds).forEach(v => {
+					msg += "\t\t" + v + "\n"
+				});
 			}
 
 			info.message.channel.send(msg);
