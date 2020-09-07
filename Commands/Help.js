@@ -51,7 +51,7 @@ function help(bot, info) {
 	} else {
 		let msg = "***use `help <command>` for help on a specific command.***\n"
 		msg += "**All Commands:**\n";
-		bot.commands.forEach((v, k) => {
+		bot.mainCommands.forEach(k => {
 			msg += "\t\t" + k + "\n";
 		});
 		info.message.channel.send(msg);

@@ -34,12 +34,14 @@ const fs = require("fs");
 
 // setup commands to an empty collection
 bot.commands = new Discord.Collection();
+// holds the main command names
+bot.mainCommands = new Set();
 
 // load commands from files
 const commandLoader = require("./commandLoader.js");
 
-commandLoader.load(bot.commands);
-commandLoader.loadSubs(bot.commands);
+commandLoader.load(bot);
+commandLoader.loadSubs(bot);
 
 const commandErrors = require("./util/ErrorTypes.js");
 

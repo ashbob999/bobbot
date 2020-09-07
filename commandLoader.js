@@ -2,7 +2,7 @@
 
 const fs = require ("fs");
 
-function load(cmds) {
+function load(bot) {
 	// get list of .js files from command folder
 	// excludes .js files that start with and underscore
 	const commandFiles = fs.readdirSync('./Commands')
@@ -13,16 +13,19 @@ function load(cmds) {
 
 		// set a new item in the Collection
 		// with the key as the command name and the value as the exported module
-		cmds.set(command.name, command);
+		bot.commands.set(command.name, command);
+		
+		// add main command name to bot.mainCommands
+		bot.mainCommands.add(command.name);
 
 		// set command aliases
 		for (const alias of command.aliases) {
-			cmds.set(alias, command);
+			bot.commands.set(alias, command);
 		}
 	}
 }
 
-function loadSubs(cmds) {
+function loadSubs(bot) {
 	// get list of all folders
 	// exclude folders starting with underscore
 	const commandFolders = fs.readdirSync("./Commands", {withFileTypes : true})
@@ -32,7 +35,7 @@ function loadSubs(cmds) {
 	for (const folder of commandFolders) {
 		const command = require(`./Commands/${folder}`);
 
-		// update amd set sub command aliases
+		// update and set sub command aliases
 		Object.keys(command.cmds).forEach(subCmdName => {
 			let subCmd = command.cmds[subCmdName];
 
@@ -43,11 +46,14 @@ function loadSubs(cmds) {
 
 		// set a new item in the Collection
 		// with the key as the command name and the value as the exported module
-		cmds.set(command.name, command);
+		bot.commands.set(command.name, command);
+
+		// add main command name to bot.mainCommands
+		bot.mainCommands.add(command.name);
 
 		// set commnad aliases
 		for (const alias of command.aliases) {
-			cmds.set(alias, command);
+			bot.commands.set(alias, command);
 		}
 	}
 }
