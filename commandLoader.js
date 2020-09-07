@@ -35,9 +35,15 @@ function loadSubs(bot) {
 	for (const folder of commandFolders) {
 		const command = require(`./Commands/${folder}`);
 
+		// create set for mainSubCommands
+		command.mainSubCommands = new Set();
+
 		// update and set sub command aliases
 		Object.keys(command.cmds).forEach(subCmdName => {
 			let subCmd = command.cmds[subCmdName];
+
+			// add subCmd to mainSubCommands
+			command.mainSubCommands.add(subCmdName);
 
 			for (const alias of subCmd.aliases) {
 				command.cmds[alias] = subCmd;

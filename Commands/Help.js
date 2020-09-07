@@ -43,7 +43,7 @@ function help(bot, info) {
 				msg += "**parent command:** " + parent + "\n";
 
 				msg += "**sub commands:**\n"
-				Object.keys(command.cmds).forEach(v => {
+				command.mainSubCommands.forEach(v => {
 					msg += "\t\t" + v + "\n"
 				});
 			}
