@@ -52,6 +52,14 @@ WHERE times.id = start_row.id
 RETURNING time_taken ;
 `;
 
+const cancel = `
+DELETE
+FROM times
+WHERE user_id = '{id}'
+	AND time_taken IS NULL
+;
+`;
+
 const clean = `
 WITH summed_time AS
 (
