@@ -6,15 +6,15 @@ const keywords = [
 ]
 
 const start = `
-INSERT INTO times (user_id,
-				   start_time)
-SELECT '{id}', '{time}'
-WHERE NOT EXISTS (
-	SELECT 1
+WITH del as (
+	DELETE
 	FROM times
 	WHERE user_id = '{id}'
-	AND time_taken is NULL
-) ;
+		AND time_taken IS NULL
+)
+INSERT INTO times (user_id,
+					start_time)
+	VALUES ('{id}', '{time}');
 `;
 
 const stop = `
