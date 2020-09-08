@@ -118,6 +118,7 @@ module.exports = {
 	keywords,
 	start,
 	stop,
+	cancel,
 	clean,
 	show_all,
 	show_user,
