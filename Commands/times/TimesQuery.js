@@ -1,20 +1,21 @@
 
 const keywords = [
 	"id",
+	"ids",
 	"time",
 	"max_time",
 ]
 
 const start = `
-INSERT INTO times (user_id,
-				   start_time)
-SELECT '{id}', '{time}'
-WHERE NOT EXISTS (
-	SELECT 1
+WITH del as (
+	DELETE
 	FROM times
 	WHERE user_id = '{id}'
-	AND time_taken is NULL
-) ;
+		AND time_taken IS NULL
+)
+INSERT INTO times (user_id,
+					start_time)
+	VALUES ('{id}', '{time}');
 `;
 
 const stop = `
@@ -50,6 +51,14 @@ FROM start_row
 WHERE times.id = start_row.id
 	AND time_diff <= {max_time}
 RETURNING time_taken ;
+`;
+
+const cancel = `
+DELETE
+FROM times
+WHERE user_id = '{id}'
+	AND time_taken IS NULL
+;
 `;
 
 const clean = `
@@ -99,10 +108,13 @@ ORDER BY total_time
 ;
 `;
 
-const show_user = `
-SELECT sum(time_taken) AS total_time
+const show_users = `
+SELECT user_id,
+	   sum(time_taken) AS total_time
 FROM times
-WHERE user_id = '{id}'
+WHERE user_id IN {ids}
+GROUP BY user_id
+ORDER BY total_time
 ;
 `;
 
@@ -110,7 +122,8 @@ module.exports = {
 	keywords,
 	start,
 	stop,
+	cancel,
 	clean,
 	show_all,
-	show_user,
+	show_users,
 }

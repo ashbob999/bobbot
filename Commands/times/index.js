@@ -25,6 +25,8 @@ module.exports = {
 	cmds: {
 		start: require("./start.js"),
 		stop: require("./stop.js"),
+		cancel: require("./cancel.js"),
 		clean: require("./clean.js"),
+		show: require("./show.js"),
 	},
 };
