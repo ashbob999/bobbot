@@ -6,14 +6,43 @@ const tq = module.parent.timesQuery;
 const Discord = require("discord.js");
 
 function show(bot, info) {
-	console.log(info.arguments);
 	if (info.arguments.length == 1) {
 		// show all users times
+		
+		let query = tq.show_all;
+
+		let result = db.getRows(query, (r, e) => {
+			if (!e) {
+				if (r.rowCount > 0) {
+					const embed = new Discord.RichEmbed();
+					
+					embed.setColor("#0000ff");
+
+					embed.setTitle("**Times Taken:**");
+
+					let guild = info.message.guild;
+
+					r.rows.forEach(e => {
+						// user is in the server
+						if (guild.members.has(e["user_id"])) {
+
+							embed.addField(getNickname(e["user_id"], info.message), 
+										db.secondsToTime(e["total_time"]));
+						}
+					});
+
+					info.message.channel.send(embed);
+				}
+			} else {
+				throw e;
+			}
+		});
 	} else {
 		// show given users times
 		let ids = [];
 		for (let i = 1; i < info.arguments.length; i++) {
 			let arg = info.arguments[i];
+			// check mention is correct
 			if (arg.startsWith("<@") && arg.endsWith(">")) {
 				arg = arg.slice(2, -1);
 				ids.push("'" + arg + "'");
@@ -24,6 +53,7 @@ function show(bot, info) {
 			return;
 		}
 
+		// convert list to string, for sql IN command
 		ids = "(" + ids.join(",") + ")";
 
 		let query = tq.show_users.format({
@@ -53,6 +83,7 @@ function show(bot, info) {
 	}
 }
 
+// gets the server nickname of a user, given their id
 function getNickname(id, message) {
 	let guild = message.guild;
 	let member = guild.members.get(id);
