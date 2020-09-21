@@ -27,5 +27,6 @@ module.exports = {
 		stop: require("./stop.js"),
 		cancel: require("./cancel.js"),
 		clean: require("./clean.js"),
+		show: require("./show.js"),
 	},
 };
