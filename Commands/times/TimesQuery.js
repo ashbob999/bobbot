@@ -1,6 +1,7 @@
 
 const keywords = [
 	"id",
+	"ids",
 	"time",
 	"max_time",
 ]
