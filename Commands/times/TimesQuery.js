@@ -1,6 +1,7 @@
 
 const keywords = [
 	"id",
+	"ids",
 	"time",
 	"max_time",
 ]
@@ -107,10 +108,13 @@ ORDER BY total_time
 ;
 `;
 
-const show_user = `
-SELECT sum(time_taken) AS total_time
+const show_users = `
+SELECT user_id,
+	   sum(time_taken) AS total_time
 FROM times
-WHERE user_id = '{id}'
+WHERE user_id IN {ids}
+GROUP BY user_id
+ORDER BY total_time
 ;
 `;
 
@@ -121,5 +125,5 @@ module.exports = {
 	cancel,
 	clean,
 	show_all,
-	show_user,
+	show_users,
 }
