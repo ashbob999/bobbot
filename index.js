@@ -14,6 +14,13 @@ server.listen(process.env.PORT || 8080);
 
 // http server end
 
+// keep on
+
+const bl = require("./bot_loader.js");
+bl.start();
+
+// end of keep on
+
 // import all of the extended functions
 require("./ExtendedFunctions.js");
 
