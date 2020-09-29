@@ -42,7 +42,7 @@ async function run() {
 		}
 
 		// wait 20 minutes
-		await sleep(20*3600*1000);
+		await sleep(20*60*1000);
 	}
 }
 
