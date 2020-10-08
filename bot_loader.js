@@ -18,6 +18,8 @@ function ping(url) {
 	req.on("error", e => {
 		console.log(e);
 	});
+
+	req.end();
 }
 
 /*
