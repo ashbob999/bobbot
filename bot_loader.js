@@ -9,7 +9,7 @@ function ping(url) {
 			res.on("data", d => {
 				// do nothing with the data
 				console.log("got data from:", url);
-			}
+			});
 		} else {
 			console.log("status code:", res.statusCode);
 		}
