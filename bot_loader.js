@@ -1,5 +1,25 @@
 "use-strict"
 
+const https = require("https");
+
+function ping(url) {
+	let req = https.request(url, res => {
+		if (res.statusCode == 200) {
+			res.setEncoding("utf8");
+			res.on("data", d => {
+				// do nothing with the data
+				console.log("got data from:", url);
+			}
+		} else {
+			console.log("status code:", res.statusCode);
+		}
+	});
+
+	req.on("error", e => {
+		console.log(e);
+	});
+}
+
 /*
 Create 20 minute timer
 if endTime - now < 20 mins:
@@ -30,6 +50,8 @@ async function run() {
 				// start bot 2 (ping url)
 				console.log("ping bot 2");
 
+				ping(process.env.url2)
+
 				return;
 			}
 		} else if (bot_id == 2) {
@@ -37,12 +59,17 @@ async function run() {
 				// start bot 1 (ping url)
 				console.log("ping bot 1");
 
+				ping(process.env.url1);
+
 				return;
 			}
 		}
 
+		// ping itself
+		ping(process.env["url" + bot_id]);
+
 		// wait 20 minutes
-		await sleep(20*60*1000);
+		await sleep(20*3600*1000);
 	}
 }
 
