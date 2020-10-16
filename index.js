@@ -9,12 +9,12 @@ let server = http.createServer((req, res) => {
 	res.setHeader("Content-Type", "text/plain");
 
 	switch (req.url) {
-		case "/kill": // kills the bot
+		case "app/kill": // kills the bot
 			res.writeHead(200);
 			console.log("load /kill");
 			process.exit();
 			break;
-		case "/": // handles the root
+		case "/app": // handles the root
 			res.writeHead(200);
 			res.end("Bot is On");
 			console.log("load ");
