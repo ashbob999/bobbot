@@ -5,34 +5,9 @@ require('dotenv').config();
 
 const http = require("http");
 
-let online = true;
-
 let server = http.createServer((req, res) => {
-	res.setHeader("Content-Type", "text/plain");
-
-	switch (req.url) {
-		case "/app/kill": // kills the bot
-			res.writeHead(200);
-			console.log("load app/kill");
-			bot.destroy();
-			res.end("Bot is off");
-			break;
-		case "/app": // handles the root
-			res.writeHead(200);
-			if (online) {
-				res.end("Bot is On");
-			} else {
-				res.end("Bot is off");
-			}
-			console.log("load /app");
-			break;
-		default: // any other path
-			res.writeHead(404);
-			res.end("404 Error");
-			console.log("404: ", req.url);
-	}
-
-	//res.end("Bot is On");
+	res.writeHead(200, {"Content-Type": "text/plain"});
+	res.end("Bot is On");
 });
 
 server.listen(process.env.PORT || 8080);
