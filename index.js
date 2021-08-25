@@ -57,6 +57,10 @@ const commandHandler = require("./commandHelper.js");
 
 const fs = require("fs");
 
+// load whitelists into a json object
+let raw = fs.readFileSync("./whitelist.json");
+let whitelist = JSON.parse(raw);
+
 // setup commands to an empty collection
 bot.commands = new Discord.Collection();
 // holds the main command names
@@ -65,61 +69,61 @@ bot.mainCommands = new Set();
 // load commands from files
 const commandLoader = require("./commandLoader.js");
 
-commandLoader.load(bot);
-commandLoader.loadSubs(bot);
+commandLoader.load(bot, whitelist);
+commandLoader.loadSubs(bot, whitelist);
 
 const commandErrors = require("./util/ErrorTypes.js");
 
 bot.login(TOKEN);
 
 bot.on('ready', () => {
-    console.info(`Logged in as ${bot.user.tag}!`);
-    
-	// loops through each server the bot is in
-    for (let [key, value] of bot.guilds) {
-		//loops through each channel the bot is in
-    	for (let [channelId, channel] of value.channels) {
-    		// loops through each command
-			bot.commands.forEach((v, k) => {
-				// does the command have a whitelist
-				if (v.whitelist) {
-					// if channel name is in the whitelist
-					if (channel.name in v.whitelist) {
-						// bind channelId to channel name
-						v.whitelist[channel.name] = channelId;
-					}
-				}
-			});
-		}
-    }
+	console.info(`Logged in as ${bot.user.tag}!`);
+
+	// // loops through each server the bot is in
+	// for (let [key, value] of bot.guilds) {
+	// 	//loops through each channel the bot is in
+	// 	for (let [channelId, channel] of value.channels) {
+	// 		// loops through each command
+	// 		bot.commands.forEach((v, k) => {
+	// 			// does the command have a whitelist
+	// 			if (v.whitelist) {
+	// 				// if channel name is in the whitelist
+	// 				if (channel.name in v.whitelist) {
+	// 					// bind channelId to channel name
+	// 					v.whitelist[channel.name] = channelId;
+	// 				}
+	// 			}
+	// 		});
+	// 	}
+	// }
 });
 
 bot.on('message', msg => {
-	
+
 	// don't reply to other bots
 	if (msg.author.bot) {
 		return;
 	}
-	
+
 	// get the message text
 	let content = msg.content;
-	
+
 	// return if the message does not start with the prefix
 	if (!content.startsWith(config.prefix)) {
 		return;
 	}
-	
+
 	// remove the prefix
 	content = content.slice(config.prefix.length).trim();
-	
+
 	// split content by spaces
 	let args = content.split(/ +/);
-	
+
 	// get message author
 	let author = msg.author;
-	
+
 	//console.log(msg.content.split(Discord.MessageMentions.USERS_PATTERN));
-	
+
 	/*
 	if (msg.mentions.users.has(bot.user.id)) {
 		console.log("mention");
@@ -131,7 +135,7 @@ bot.on('message', msg => {
 		arguments: args,
 		content: content,
 	};
-	
+
 	let error = commandHandler(bot, info);
 
 	switch (error) {

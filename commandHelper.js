@@ -25,9 +25,9 @@ function subCommand(bot, info, command) {
 	let subCmd = command.cmds[subCmdStr];
 
 	// if the command has a channel whitelist
-	if (subCmd.whitelist) {
+	if (subCmd.whitelist_ids) {
 		// if the channel is not in the whitelist then return
-		if (!Object.values(subCmd.whitelist).includes(info.message.channel.id)) {
+		if (!subCmd.whitelist_ids.has(info.message.channel.id)) {
 			return commandErrors.NOT_WHITELISTED;
 		}
 	}
@@ -55,16 +55,16 @@ function handleCommand(bot, info) {
 	let command = bot.commands.get(info.arguments[0]);
 
 	// if the command has a channel whitelist
-	if (command.whitelist) {
+	if (command.whitelist_ids) {
 		// if the channel is not in the whitelist then return
-		if (!Object.values(command.whitelist).includes(info.message.channel.id)) {
+		if (!command.whitelist_ids.has(info.message.channel.id)) {
 			return commandErrors.NOT_WHITELISTED;
 		}
 	}
 
 	// gets whether the author is admin
 	let isAdmin = info.message.member.permissions.has("ADMINISTRATOR");
-	
+
 	info.isAdmin = isAdmin;
 
 	// does the command require admin
