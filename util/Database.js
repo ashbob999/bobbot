@@ -1,4 +1,5 @@
-const pg = require("./../libs/pg");
+'use-strict'
+const pg = require("pg");
 
 
 function getRows(query, callback) {
